@@ -1,4 +1,5 @@
 #include "SongBuzzer.h"
+#include "WavePattern.h"
 
 
 // 2 - 18 ROWS
@@ -21,14 +22,13 @@ int beats1[]  = {4, 4, 4,  4,  4,  2, 6, 4, 4,4,4,4,4,2,10,4,4,4,4,4,2,4,2,2,2,4
 
 SongBuzzer::Note* m11[sizeof(m10)/2];
 
-boolean ledstates[16][4]; 
 
 int MAX_COUNT = sizeof(melodies[0]->notes) / 2; // this will need changed
 int row11 = 53;
 int row22 = 49;
 int row33 = 47;
 int row44 = 51;
-int bpm = 141;
+int bpm = 250;
 int numOfBuzzers = 2;
 long tempo = (1000000 * 60) / bpm;
 int modcounter =0;
@@ -60,8 +60,6 @@ void setup() {
   Serial.begin(9600);
   buzzer = new SongBuzzer(21);
   getPeriodNotes();
-  buzzer->setLeds();
-
 }
 
 
@@ -70,7 +68,6 @@ void setup() {
 
 void loop() {
  
-
    if(buzzer->hasExpired())
    {
     noteIndex++;
@@ -97,4 +94,5 @@ void initLeds()
   for (int y = 0; y <= 18; y++) {
   pinMode(y, OUTPUT);
   }  
+  
 }

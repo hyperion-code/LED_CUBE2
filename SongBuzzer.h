@@ -2,6 +2,7 @@
 #define SongBuzzer_h
  
 #include "Arduino.h"
+#include "WavePattern.h"
  
 class SongBuzzer
 {
@@ -24,14 +25,13 @@ public:
   void playNote();
   void lightDelay(int targetdelay);
   Note* getNote();
-  void setCube();
-  void setLeds();
  
 private:
   Note* _note;
   int _pin;
   boolean expired;
   long _time;
+  WavePattern wavePattern;
 
 };
  
