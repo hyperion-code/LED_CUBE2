@@ -22,10 +22,10 @@ public:
   boolean hasExpired();
   void setNote(Note* note);
   void playNote();
-  void lightdelay(int targetdelay);
+  void lightDelay(int targetdelay);
   Note* getNote();
-  void setcube();
-  void setleds();
+  void setCube();
+  void setLeds();
  
 private:
   Note* _note;

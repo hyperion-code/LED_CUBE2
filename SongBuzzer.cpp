@@ -34,17 +34,17 @@ void SongBuzzer::playNote()
   if(_note->period != 0)
   {
    digitalWrite(_pin,HIGH);
-   lightdelay(_note->period / 2);
+   lightDelay(_note->period / 2);
    //delayMicroseconds(_note->period / 2);
  
    digitalWrite(_pin, LOW);
    //delayMicroseconds(_note->period / 2);
-   lightdelay(_note->period / 2);
+   lightDelay(_note->period / 2);
    expired = micros() - _time > _note->max_play_time;
 
   }else {
     for (int j = 0; j < 100; j++) {
-      //lightdelay(_note->play_time/800);
+      //lightDelay(_note->play_time/800);
       delayMicroseconds(1000);  
     }
     expired = true;       
@@ -62,7 +62,7 @@ SongBuzzer::Note* SongBuzzer::getNote()
   return _note;
 }
 
-void SongBuzzer::setcube() {
+void SongBuzzer::setCube() {
   counter++;
   long start = micros();
   switch(counter%2){
@@ -126,20 +126,15 @@ void SongBuzzer::setcube() {
   timelength=micros()-start; 
 }
 
-
-
-void SongBuzzer::setleds(){
+void SongBuzzer::setLeds(){
     for (int h = 1; h <= 5;h++) {
-  for (int y = 1; y <= 17; y++) {
-    leds[y][h] = 1;  
-    }}
-  
-
-
-  
- }
-void SongBuzzer::lightdelay(int targetdelay){
-       setcube();
+      for (int y = 1; y <= 17; y++) {
+        leds[y][h] = 1;  
+      }
+    }  
+}
+void SongBuzzer::lightDelay(int targetdelay){
+      setCube();
       delayMicroseconds(((targetdelay)-(624)));
      
 }

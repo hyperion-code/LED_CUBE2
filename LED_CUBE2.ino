@@ -55,27 +55,12 @@ void getPeriodNotes()
 
 }
 
-void setup() { 
-   pinMode(row11, OUTPUT);
-  pinMode(row22, OUTPUT);
-  pinMode(row33, OUTPUT);
-  pinMode(row44, OUTPUT);
-   for (int y = 0; y <= 18; y++) {
-    pinMode(y, OUTPUT);
-  }
-
+void setup() {
+  initLeds();
   Serial.begin(9600);
-  m1 = new Melody();
-  
-  for(int i =0; i< sizeof(m10)/2; i++)
-  {
-    m1->notes[i]=  m10[i];
-    m1->beats[i] = beats1[i];
-  }
-  melodies[0] = m1;
   buzzer = new SongBuzzer(21);
   getPeriodNotes();
-    buzzer->setleds();
+  buzzer->setLeds();
 
 }
 
@@ -90,17 +75,26 @@ void loop() {
    {
     noteIndex++;
     if(noteIndex>=sizeof(notesAsPeriods)/2)
-    noteIndex=0;
-    buzzer->setNote(notesAsPeriods[noteIndex]);
+      noteIndex=0;
+      buzzer->setNote(notesAsPeriods[noteIndex]);
    }
    else
    {
     buzzer->playNote();
-    }
+   }
 }
 
 int noteToFrequency(int keyNum)
 {
   return floor(pow(2,((keyNum-49)/12.0)) * 440);
 }
-
+void initLeds()
+{
+  pinMode(row11, OUTPUT);
+  pinMode(row22, OUTPUT);
+  pinMode(row33, OUTPUT);
+  pinMode(row44, OUTPUT);
+  for (int y = 0; y <= 18; y++) {
+  pinMode(y, OUTPUT);
+  }  
+}
