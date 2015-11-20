@@ -6,11 +6,17 @@ SongBuzzer::SongBuzzer(int pin)
   expired = true;
   pinMode(pin, OUTPUT);
   _time = micros();
+  currentPattern = &wavePattern;
 }
  
 void SongBuzzer::setNote(Note* note)
 {
-  wavePattern.adjustLeds();
+  if(currentPattern->hasExpired())
+  {
+    currentPattern = &openWindows;  
+  }
+  currentPattern->queue();
+
   _note = note;
   _note->play_time= 0;
   expired = false;
@@ -23,11 +29,11 @@ void SongBuzzer::playNote()
 {
   if(_note->period != 0)
   {
-   //digitalWrite(_pin,HIGH);
+   digitalWrite(_pin,HIGH);
    lightDelay(_note->period / 2);
    //delayMicroseconds(_note->period / 2);
  
-   //digitalWrite(_pin, LOW);
+   digitalWrite(_pin, LOW);
    //delayMicroseconds(_note->period / 2);
    lightDelay(_note->period / 2);
    expired = micros() - _time > _note->max_play_time;
@@ -49,8 +55,7 @@ SongBuzzer::Note* SongBuzzer::getNote()
   return _note;
 }
 void SongBuzzer::lightDelay(int targetdelay){
-     
-      delayMicroseconds((targetdelay-(wavePattern.play())));
+      delayMicroseconds((targetdelay-(currentPattern->play())));
      
 }
 

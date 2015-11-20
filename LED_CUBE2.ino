@@ -28,7 +28,7 @@ int row11 = 53;
 int row22 = 49;
 int row33 = 47;
 int row44 = 51;
-int bpm = 250;
+int bpm = 100;
 int numOfBuzzers = 2;
 long tempo = (1000000 * 60) / bpm;
 int modcounter =0;
@@ -58,6 +58,7 @@ void getPeriodNotes()
 void setup() {
   initLeds();
   Serial.begin(9600);
+  Serial.flush();
   buzzer = new SongBuzzer(21);
   getPeriodNotes();
 }
@@ -72,7 +73,7 @@ void loop() {
    {
     noteIndex++;
     if(noteIndex>=sizeof(notesAsPeriods)/2)
-      noteIndex=0;
+      exit(0);
       buzzer->setNote(notesAsPeriods[noteIndex]);
    }
    else

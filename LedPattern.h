@@ -18,8 +18,11 @@ class LedPattern
     }
     
     virtual ~LedPattern(){};
+
+    
     
     long play() {
+            
       long start = micros();
       counter++;
       switch (counter % 2) {
@@ -81,11 +84,31 @@ class LedPattern
         default: break;
 
       }
-      
       return 624;
     }
+
+    boolean hasExpired()
+    {
+      return currentRunCount > maxRunCount;
+    }
+
+    void queue()
+    {
+      currentRunCount++;
+      adjustLeds();  
+      
+    }
   protected:
+
     virtual void adjustLeds()=0;
+
+    void setMaxRunCount(int i)
+    {
+      maxRunCount = i;  
+    }
+    int maxRunCount = 1;
+    int currentRunCount = 0;
+    
     int _leds[18][5]; // first dimension = column, second dimension = row
     
   private:
@@ -95,6 +118,7 @@ class LedPattern
     int row3 = 47;
     int row4 = 51;
     int lednum = 18;
+        int runcount = 1;
     int del0, del20 = 0;
 };
 

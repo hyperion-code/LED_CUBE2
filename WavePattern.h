@@ -6,13 +6,15 @@
 class WavePattern: public LedPattern
 {
   public:
-    WavePattern();
+    WavePattern(){
+      setMaxRunCount(4);
+      };
     virtual void adjustLeds()
     {
       for (int i = 1; i <= 5; i++)
       {
-        for (int k = 1; k <= 17; k++)
-        {
+        for (int k = 0; k <= 16; k++)
+        {          
           if(match && inOn(k))
           {
             _leds[k][i] = 1; 
@@ -45,7 +47,7 @@ class WavePattern: public LedPattern
             return false;
           }  
             
-          int on[8] = {2,4,5,7,10,13,14,16};
+          int on[8] = {2,4,5,7,10,12,13,15};
           boolean match = true;
           
           

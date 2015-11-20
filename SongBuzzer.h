@@ -3,6 +3,8 @@
  
 #include "Arduino.h"
 #include "WavePattern.h"
+#include "ExplosionPattern.h"
+#include "OpenWindows.h"
  
 class SongBuzzer
 {
@@ -32,6 +34,10 @@ private:
   boolean expired;
   long _time;
   WavePattern wavePattern;
+  ExplosionPattern explosionPattern;
+  OpenWindows openWindows;
+  LedPattern * currentPattern;
+  int patternIndex = 0;
 
 };
  
