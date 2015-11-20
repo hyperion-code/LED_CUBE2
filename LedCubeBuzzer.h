@@ -6,7 +6,7 @@
 #include "ExplosionPattern.h"
 #include "OpenWindows.h"
  
-class SongBuzzer
+class LedCubeBuzzer
 {
  
 public:
@@ -21,7 +21,7 @@ public:
     long max_play_time = 0;
   };
  
-  SongBuzzer(int pin);
+  LedCubeBuzzer(int pin);
   boolean hasExpired();
   void setNote(Note* note);
   void playNote();

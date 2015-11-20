@@ -1,4 +1,4 @@
-#include "SongBuzzer.h"
+#include "LedCubeBuzzer.h"
 #include "WavePattern.h"
 
 
@@ -16,11 +16,11 @@ struct Melody
 
 Melody* m1;
 Melody* melodies[2];
-SongBuzzer* buzzer;
+LedCubeBuzzer* buzzer;
 int m10[] = {R,52,52,49,51,49,51,47,R,52,52,49,51,49,47,R,44,44,47,44,44,44,42,40,-1};
 int beats1[]  = {4, 4, 4,  4,  4,  2, 6, 4, 4,4,4,4,4,2,10,4,4,4,4,4,2,4,2,2,2,4,4,4,4,4,2,6,4,4,4,4,4,4,2,10,4,4,4,4,4,2,4,2,4};
 
-SongBuzzer::Note* m11[sizeof(m10)/2];
+LedCubeBuzzer::Note* m11[sizeof(m10)/2];
 
 
 int MAX_COUNT = sizeof(melodies[0]->notes) / 2; // this will need changed
@@ -35,12 +35,12 @@ int modcounter =0;
 int octaveMultiplier = 1;
 
 int noteIndex = -1;
-SongBuzzer::Note* notesAsPeriods[sizeof(m10)/2];
+LedCubeBuzzer::Note* notesAsPeriods[sizeof(m10)/2];
 void getPeriodNotes()
 {
   for(int i =0; i < sizeof(m10)/2;i++)
   {
-    SongBuzzer::Note* note = new SongBuzzer::Note();
+    LedCubeBuzzer::Note* note = new LedCubeBuzzer::Note();
     if(m10[i] == -1 || m10[i] == 0)
       {
         note->period = 0;
@@ -59,7 +59,7 @@ void setup() {
   initLeds();
   Serial.begin(9600);
   Serial.flush();
-  buzzer = new SongBuzzer(21);
+  buzzer = new LedCubeBuzzer(21);
   getPeriodNotes();
 }
 

@@ -1,6 +1,6 @@
-#include "SongBuzzer.h"
+#include "LedCubeBuzzer.h"
 
-SongBuzzer::SongBuzzer(int pin)
+LedCubeBuzzer::LedCubeBuzzer(int pin)
 {
   _pin = pin;
   expired = true;
@@ -9,7 +9,7 @@ SongBuzzer::SongBuzzer(int pin)
   currentPattern = &wavePattern;
 }
  
-void SongBuzzer::setNote(Note* note)
+void LedCubeBuzzer::setNote(Note* note)
 {
   if(currentPattern->hasExpired())
   {
@@ -25,7 +25,7 @@ void SongBuzzer::setNote(Note* note)
   playNote();
 }
  
-void SongBuzzer::playNote()
+void LedCubeBuzzer::playNote()
 {
   if(_note->period != 0)
   {
@@ -46,15 +46,15 @@ void SongBuzzer::playNote()
     expired = true;       
   }
 }
- boolean SongBuzzer::hasExpired()
+ boolean LedCubeBuzzer::hasExpired()
 {
   return expired;
 }
-SongBuzzer::Note* SongBuzzer::getNote()
+LedCubeBuzzer::Note* LedCubeBuzzer::getNote()
 {
   return _note;
 }
-void SongBuzzer::lightDelay(int targetdelay){
+void LedCubeBuzzer::lightDelay(int targetdelay){
       delayMicroseconds((targetdelay-(currentPattern->play())));
      
 }
