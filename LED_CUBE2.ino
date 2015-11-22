@@ -61,14 +61,14 @@ void getPeriodNotes()
 void setup() {
   initLeds();
   initButtons();
-
+  
   LedPattern::PatternSet* patterns = new LedPattern::PatternSet();
-  patterns->set[0] = new WavePattern(3);
-  patterns->set[1] = new ExplosionPattern(3);
-  patterns->set[2] = new OpenWindows(3);
-  patterns->set[3] = new ClimbPattern(4);
-  patterns->set[4] = new WallPattern(4);
-  patterns->_size =  5;
+  //patterns->set[0] = new WavePattern(4);
+  //patterns->set[1] = new ExplosionPattern(4);
+ // patterns->set[0] = new OpenWindows(4);
+ patterns->set[0] = new ClimbPattern(4);
+ patterns->set[1] = new WallPattern(4);
+  patterns->_size =  2;
 
   buzzer = new LedCubeBuzzer(21, patterns);
   getPeriodNotes();
@@ -76,35 +76,26 @@ void setup() {
 
 
 //================LED CUBE SETUP===========================
-boolean first = false;
 
 void loop() {
-  if (first)
+  if (digitalRead(yellowButtonPort))
   {
-    first = true;
-    delay(1);
+    reset();
+    exit(0);
+  }
+  if (digitalRead(blueButtonPort)) buzzer->enableSound();
+  if (digitalRead(greenButtonPort)) {}
+
+  if (buzzer->hasExpired())
+  {
+    noteIndex++;
+    if (noteIndex >= sizeof(notesAsPeriods) / 2)
+      exit(0);
+    buzzer->setNote(notesAsPeriods[noteIndex]);
   }
   else
   {
-    if (digitalRead(yellowButtonPort))
-    {
-      reset();
-      exit(0);
-    }
-    if (digitalRead(blueButtonPort)) buzzer->enableSound();
-    if (digitalRead(greenButtonPort)) {}
-
-    if (buzzer->hasExpired())
-    {
-      noteIndex++;
-      if (noteIndex >= sizeof(notesAsPeriods) / 2)
-        exit(0);
-      buzzer->setNote(notesAsPeriods[noteIndex]);
-    }
-    else
-    {
-      buzzer->playNote();
-    }
+    buzzer->playNote();
   }
 }
 
@@ -114,7 +105,6 @@ int noteToFrequency(int keyNum)
 }
 void initLeds()
 {
-  Serial.println(1);
   pinMode(row1, OUTPUT);
   pinMode(row2, OUTPUT);
   pinMode(row3, OUTPUT);
@@ -127,7 +117,7 @@ void reset()
 {
   delete notesAsPeriods;
   delete buzzer;
-  digitalWrite(32, LOW);
+  //digitalWrite(32, LOW);
 }
 void initButtons()
 {
@@ -136,7 +126,7 @@ void initButtons()
   pinMode(26, INPUT);
   pinMode(28, INPUT);
   pinMode(30, OUTPUT);
-  Serial.println(1);
+  
   digitalWrite(32, HIGH);
 
 }

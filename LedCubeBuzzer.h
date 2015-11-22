@@ -22,6 +22,7 @@ public:
   };
  
   LedCubeBuzzer(int pin, LedPattern::PatternSet* set);
+  ~LedCubeBuzzer();
   boolean hasExpired();
   void setNote(Note* note);
   void playNote();

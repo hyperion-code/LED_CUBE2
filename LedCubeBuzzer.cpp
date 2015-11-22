@@ -75,5 +75,8 @@ void LedCubeBuzzer::stop()
   off->play();
   patternIndex = 0;
 }
-
+LedCubeBuzzer::~LedCubeBuzzer()
+{
+  delete _patterns;
+}
 
