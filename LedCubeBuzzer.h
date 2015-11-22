@@ -27,6 +27,9 @@ public:
   void playNote();
   void lightDelay(int targetdelay);
   Note* getNote();
+  void disableSound();
+  void enableSound();
+  void stop();
  
 private:
   Note* _note;
@@ -35,6 +38,7 @@ private:
   long _time;
   int patternIndex = 0;
   LedPattern::PatternSet * _patterns;
+  boolean _sound = true;
 
 };
  

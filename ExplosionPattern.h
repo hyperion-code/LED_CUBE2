@@ -50,6 +50,11 @@ class ExplosionPattern: public LedPattern
       else
         exploded = true;
     }
+
+  protected:
+    virtual void reset()
+    {
+    }
   private:
     boolean isInCube(int i, int k)
     {

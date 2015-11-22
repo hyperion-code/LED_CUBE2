@@ -23,10 +23,16 @@ class ClimbPattern: public LedPattern
           }
         }
       }
-      if(currentLayer >=4 )
-        currentLayer = 0;  
+      if (currentLayer >= 4 )
+        currentLayer = 0;
       else
         currentLayer++;
+    }
+
+  protected:
+    virtual void reset()
+    {
+      currentLayer = 1;
     }
 
   private:

@@ -1,4 +1,5 @@
 #include "LedCubeBuzzer.h"
+#include "AllOffPattern.h"
 
 LedCubeBuzzer::LedCubeBuzzer(int pin, LedPattern::PatternSet* set)
 {
@@ -13,9 +14,9 @@ void LedCubeBuzzer::setNote(Note* note)
 {
   if (_patterns->set[patternIndex]->hasExpired())
   {
-    if(patternIndex == (_patterns->_size - 1))
+    if (patternIndex == (_patterns->_size - 1))
       patternIndex = 0;
-      else
+    else
       patternIndex++;
   }
   _patterns->set[patternIndex]->queue();
@@ -32,11 +33,11 @@ void LedCubeBuzzer::playNote()
 {
   if (_note->period != 0)
   {
-    digitalWrite(_pin, HIGH);
+    if (_sound)digitalWrite(_pin, HIGH);
     lightDelay(_note->period / 2);
     //delayMicroseconds(_note->period / 2);
 
-    digitalWrite(_pin, LOW);
+    if (_sound) digitalWrite(_pin, LOW);
     //delayMicroseconds(_note->period / 2);
     lightDelay(_note->period / 2);
     expired = micros() - _time > _note->max_play_time;
@@ -59,6 +60,20 @@ LedCubeBuzzer::Note* LedCubeBuzzer::getNote()
 }
 void LedCubeBuzzer::lightDelay(int targetdelay) {
   delayMicroseconds((targetdelay - (_patterns->set[patternIndex]->play())));
+}
+void LedCubeBuzzer::disableSound()
+{
+  _sound = false;
+}
+void LedCubeBuzzer::enableSound()
+{
+  _sound = true;  
+}
+void LedCubeBuzzer::stop()
+{
+  AllOffPattern* off = new AllOffPattern(1);
+  off->play();
+  patternIndex = 0;
 }
 
 

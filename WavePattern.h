@@ -32,6 +32,10 @@ class WavePattern: public LedPattern
         else
           match = true;
       }
+      protected:
+      virtual void reset()
+    {
+    }
     private:
           boolean inOn(int k)
           {

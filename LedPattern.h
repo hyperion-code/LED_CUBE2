@@ -109,6 +109,7 @@ class LedPattern
       if(currentRunCount >= _maxRunCount)
       {
         currentRunCount = 0;
+        reset();
         return true;
       }
       return false;
@@ -128,6 +129,7 @@ class LedPattern
 
     virtual void adjustLeds()=0;
     int currentRunCount = 0;
+    virtual void reset() = 0;
     
     int _leds[18][5]; // first dimension = column, second dimension = row
     

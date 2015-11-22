@@ -42,6 +42,11 @@ class OpenWindows: public LedPattern
       else
       opened = true;
     }
+    protected:
+    virtual void reset()
+    {
+
+    }
   private:
     boolean opened = false;
 
