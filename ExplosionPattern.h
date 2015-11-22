@@ -6,7 +6,7 @@
 class ExplosionPattern: public LedPattern
 {
   public:
-    ExplosionPattern() {};
+    ExplosionPattern(int maxRunCount):LedPattern(maxRunCount){};
     virtual void adjustLeds()
     {
       
@@ -59,6 +59,6 @@ class ExplosionPattern: public LedPattern
       }
       return false;
     }
-    boolean exploded = true;
+    boolean exploded = false;
 };
 #endif

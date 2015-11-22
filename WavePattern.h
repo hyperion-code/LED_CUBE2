@@ -6,9 +6,7 @@
 class WavePattern: public LedPattern
 {
   public:
-    WavePattern(){
-      setMaxRunCount(4);
-      };
+    WavePattern(int maxRunCount):LedPattern(maxRunCount){};
     virtual void adjustLeds()
     {
       for (int i = 1; i <= 5; i++)

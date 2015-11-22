@@ -1,5 +1,7 @@
 #include "LedCubeBuzzer.h"
 #include "WavePattern.h"
+#include "AllOnPattern.h"
+#include "ClimbPattern.h"
 
 
 // 2 - 18 ROWS
@@ -15,27 +17,20 @@ struct Melody
 };
 
 Melody* m1;
-Melody* melodies[2];
 LedCubeBuzzer* buzzer;
-int m10[] = {R,52,52,49,51,49,51,47,R,52,52,49,51,49,47,R,44,44,47,44,44,44,42,40,-1};
-int beats1[]  = {4, 4, 4,  4,  4,  2, 6, 4, 4,4,4,4,4,2,10,4,4,4,4,4,2,4,2,2,2,4,4,4,4,4,2,6,4,4,4,4,4,4,2,10,4,4,4,4,4,2,4,2,4};
+int m10[] =     {R,52,52,49,51,49,51,47,R,52,52,49,51,49,47,R,44,44,47,44,44,44,42,40,-1};
+int beats1[]  = {4, 4, 4, 4, 4, 2, 6, 4,4, 4, 4, 4, 4, 2,10,4, 4, 4, 4, 4, 2, 4, 2, 2,-1};
 
-LedCubeBuzzer::Note* m11[sizeof(m10)/2];
-
-
-int MAX_COUNT = sizeof(melodies[0]->notes) / 2; // this will need changed
-int row11 = 53;
-int row22 = 49;
-int row33 = 47;
-int row44 = 51;
-int bpm = 100;
-int numOfBuzzers = 2;
+int row1 = 53;
+int row2 = 49;
+int row3 = 47;
+int row4 = 51;
+int bpm = 128;
 long tempo = (1000000 * 60) / bpm;
-int modcounter =0;
-int octaveMultiplier = 1;
 
 int noteIndex = -1;
 LedCubeBuzzer::Note* notesAsPeriods[sizeof(m10)/2];
+
 void getPeriodNotes()
 {
   for(int i =0; i < sizeof(m10)/2;i++)
@@ -58,8 +53,16 @@ void getPeriodNotes()
 void setup() {
   initLeds();
   Serial.begin(9600);
-  Serial.flush();
-  buzzer = new LedCubeBuzzer(21);
+  
+  LedPattern::PatternSet* patterns = new LedPattern::PatternSet();
+  /*patterns->set[0] = new WavePattern(3);
+  patterns->set[1] = new ExplosionPattern(3);
+  patterns->set[2] = new OpenWindows(3);*/
+  patterns->set[3] = new AllOnPattern(1);
+  //patterns->set[4] = new ClimbPattern(4);
+  patterns->_size = 1;
+  
+  buzzer = new LedCubeBuzzer(21, patterns);
   getPeriodNotes();
 }
 
@@ -68,7 +71,6 @@ void setup() {
 
 
 void loop() {
- 
    if(buzzer->hasExpired())
    {
     noteIndex++;
@@ -88,12 +90,11 @@ int noteToFrequency(int keyNum)
 }
 void initLeds()
 {
-  pinMode(row11, OUTPUT);
-  pinMode(row22, OUTPUT);
-  pinMode(row33, OUTPUT);
-  pinMode(row44, OUTPUT);
+  pinMode(row1, OUTPUT);
+  pinMode(row2, OUTPUT);
+  pinMode(row3, OUTPUT);
+  pinMode(row4, OUTPUT);
   for (int y = 0; y <= 18; y++) {
   pinMode(y, OUTPUT);
   }  
-  
 }

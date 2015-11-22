@@ -6,7 +6,7 @@
 class OpenWindows: public LedPattern
 {
   public:
-    OpenWindows() {};
+    OpenWindows(int maxRunCount):LedPattern(maxRunCount){};
     virtual void adjustLeds()
     {
       for (int i = 0; i <= 5; i++)

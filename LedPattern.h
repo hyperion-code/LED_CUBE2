@@ -6,6 +6,23 @@ class LedPattern
 {
 
   public:
+    struct PatternSet
+    {
+      LedPattern* set[64];
+      int _size = 0;
+    };
+
+    
+    LedPattern(int maxRunCount)
+      {
+        for (int i = 1; i <= 5; i++){
+          for (int k = 1; k <= 17; k++)
+          {
+            _leds[k][i] = 0;
+          }
+      }
+      setMaxRunCount(maxRunCount);
+    }
 
     LedPattern()
       {
@@ -89,7 +106,12 @@ class LedPattern
 
     boolean hasExpired()
     {
-      return currentRunCount > maxRunCount;
+      if(currentRunCount >= _maxRunCount)
+      {
+        currentRunCount = 0;
+        return true;
+      }
+      return false;
     }
 
     void queue()
@@ -98,15 +120,13 @@ class LedPattern
       adjustLeds();  
       
     }
+    void setMaxRunCount(int i)
+    {
+      _maxRunCount = i;  
+    }
   protected:
 
     virtual void adjustLeds()=0;
-
-    void setMaxRunCount(int i)
-    {
-      maxRunCount = i;  
-    }
-    int maxRunCount = 1;
     int currentRunCount = 0;
     
     int _leds[18][5]; // first dimension = column, second dimension = row
@@ -118,7 +138,7 @@ class LedPattern
     int row3 = 47;
     int row4 = 51;
     int lednum = 18;
-        int runcount = 1;
+    int _maxRunCount = 0;
     int del0, del20 = 0;
 };
 

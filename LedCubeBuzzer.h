@@ -21,7 +21,7 @@ public:
     long max_play_time = 0;
   };
  
-  LedCubeBuzzer(int pin);
+  LedCubeBuzzer(int pin, LedPattern::PatternSet* set);
   boolean hasExpired();
   void setNote(Note* note);
   void playNote();
@@ -33,11 +33,8 @@ private:
   int _pin;
   boolean expired;
   long _time;
-  WavePattern wavePattern;
-  ExplosionPattern explosionPattern;
-  OpenWindows openWindows;
-  LedPattern * currentPattern;
   int patternIndex = 0;
+  LedPattern::PatternSet * _patterns;
 
 };
  
